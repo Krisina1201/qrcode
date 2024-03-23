@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+          font-family: Arial, sans-serif;
+          text-align: center;
+          margin: 0;
+          padding: 0;
+        }
+
+        h1 {
+          font-size: 2.5em;
+          margin-top: 50px;
+        }
+
+        form {
+          margin-top: 20px;
+        }
+
+        label {
+          display: block;
+          margin-bottom: 10px;
+        }
+
+        input {
+          padding: 10px;
+          width: 300px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+
+        button {
+          padding: 10px 20px;
+          background-color: #3498db;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        button:hover {
+          background-color: #2980b9;
+        }
+
+        p {
+          margin-top: 20px;
+        }
+
+        img {
+          margin-top: 20px;
+        }
+
+        .qr-code {
+          margin-top: 20px;
+          border: 5px solid #3498db;
+          padding: 10px;
+          border-radius: 10px;
+          display: inline-block;
+        }
+
+        .qr-code-info {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .qr-code-info p {
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <form method="post">
+        <label for="link">Enter the link:</label>
+        <input type="text" id="link" name="link">
+        <button type="submit">Generate QR Code</button>
+    </form>
+    {% if link %}
+        <div class="qr-code-info">
+            <p>QR Code for: {{ link }}</p>
+            <div class="qr-code">
+                <img src="{{ url_for('static', filename='qrcode.png') }}" alt="QR Code">
+            </div>
+        </div>
+    {% endif %}
+    <script>
+        // JavaScript для обрезки слишком длинных ссылок
+        document.addEventListener('DOMContentLoaded', function() {
+            var linkElement = document.querySelector('.qr-code-info p');
+            var linkText = linkElement.textContent;
+            if (linkText.length > 30) {
+                linkElement.textContent = linkText.substring(0, 30) + '...';
+            }
+        });
+    </script>
+</body>
+</html>
